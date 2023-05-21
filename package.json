@@ -1,0 +1,14 @@
+{
+  "name": "radix-vue",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  }
+}
