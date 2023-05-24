@@ -5,7 +5,11 @@
     "target": "ESNext",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "strict": true,
-    "rootDir": "src"
+    "rootDir": "./src",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "moduleResolution": "node"
   },
   "exclude": ["node_modules"]
 }
