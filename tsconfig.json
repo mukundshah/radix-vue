@@ -1,11 +1,3 @@
 {
-  "include": ["src"],
-  "compilerOptions": {
-    "module": "ESNext",
-    "rootDir": "src",
-    "target": "ESNext",
-    "strict": true,
-    "moduleResolution": "node"
-  },
-  "exclude": ["node_modules", "dist"]
+  "extends": "./tsconfig.base.json"
 }
