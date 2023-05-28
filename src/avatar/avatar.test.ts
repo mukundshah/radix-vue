@@ -2,8 +2,7 @@ import { describe, expect, it, beforeAll, afterAll, beforeEach } from "vitest";
 
 import { render } from "@testing-library/vue";
 import type { RenderResult } from "@testing-library/vue";
-import { axe, toHaveNoViolations } from "jest-axe";
-// import {toBeInTheDocument} from "@testing-library/jest-dom";
+import { axe } from "jest-axe";
 
 import { Avatar, AvatarImage, AvatarFallback } from "./avatar";
 
@@ -11,8 +10,6 @@ const ROOT_TEST_ID = "avatar-root";
 const FALLBACK_TEXT = "AB";
 const IMAGE_ALT_TEXT = "Fake Avatar";
 const DELAY = 300;
-
-expect.extend(toHaveNoViolations);
 
 describe("given an Avatar with fallback and no image", () => {
   let rendered: RenderResult;
