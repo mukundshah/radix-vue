@@ -84,7 +84,6 @@ describe("given an Avatar with fallback and a working image", () => {
 
   it("should render the fallback initially", () => {
     const fallback = rendered.queryByText(FALLBACK_TEXT);
-    console.log("fallback", fallback);
     expect(fallback).toBeInTheDocument();
   });
 

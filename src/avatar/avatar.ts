@@ -42,7 +42,6 @@ interface AvatarProps extends PrimitiveProps {}
 
 let Avatar = defineComponent(
   (props: AvatarProps, { attrs, slots }) => {
-    console.log("Avatar", props, attrs, slots);
     const imageLoadingStatus = ref<ImageLoadingStatus>("idle");
     let api: AvatarContextValue = {
       imageLoadingStatus: imageLoadingStatus,
