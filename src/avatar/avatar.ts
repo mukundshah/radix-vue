@@ -1,9 +1,9 @@
 import { defineComponent, h, provide, ref, watch, watchEffect } from "vue";
-import { Primitive } from "@/primitive/primitive";
-import { useCreateContext } from "@/utils/context";
+import { Primitive } from "../primitive/primitive";
+import { useCreateContext } from "../utils/context";
 
 import type { Ref } from "vue";
-import type { PrimitiveProps } from "@/primitive/primitive";
+import type { PrimitiveProps } from "../primitive/primitive";
 
 type ImageLoadingStatus = "idle" | "loading" | "loaded" | "error";
 
@@ -51,12 +51,7 @@ let Avatar = defineComponent(
       },
     };
     provide(AvatarContext, api);
-    return () =>
-      h(
-        Primitive.div,
-        { ...attrs, id: "hgjhg" },
-        slots.default && slots.default()
-      );
+    return () => h(Primitive.div, attrs, slots);
   },
   { name: "Avatar" }
 );
@@ -110,7 +105,7 @@ let AvatarFallback = defineComponent(
 
     return () => {
       return canRender.value && context.imageLoadingStatus.value !== "loaded"
-        ? h(Primitive.span, attrs, slots.default && slots.default())
+        ? h(Primitive.span, attrs, slots)
         : null;
     };
   },
