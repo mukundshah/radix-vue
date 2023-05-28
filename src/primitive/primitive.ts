@@ -19,44 +19,44 @@ const NODES = [
   "ul",
 ] as const;
 
-// type Node = typeof NODES[number];
+type Primitives = Record<(typeof NODES)[number], any>;
 
-const Primitive: Record<(typeof NODES)[number], any> = NODES.reduce(
-  (primitive, node) => {
-    const componentName = `Primitive${capitalizeFirstLetter(node)}`;
-    const component = defineComponent({
+interface PrimitiveProps {
+  asChild?: boolean;
+}
+
+const Primitive = NODES.reduce((primitive, node) => {
+  const componentName = `Primitive${capitalizeFirstLetter(node)}`;
+  const component = defineComponent(
+    (props: PrimitiveProps, { slots, attrs }) => {
+      onMounted(() => {
+        (window as any)[Symbol.for("radix-ui")] = true;
+      });
+
+      return () => {
+        return props.asChild
+          ? slots.default?.()
+          : h(
+              node,
+              {
+                ...attrs,
+              },
+              slots.default?.()
+            );
+      };
+    },
+    {
       name: componentName,
-      props: {
-        asChild: {
-          type: Boolean,
-          default: false,
-        },
-      },
-      setup(props, { slots, attrs }) {
-        onMounted(() => {
-          (window as any)[Symbol.for("radix-ui")] = true;
-        });
+      props: ["asChild"],
+    }
+  );
 
-        return () => {
-          const Comp = props.asChild ? "slot" : node;
-          return h(
-            Comp,
-            {
-              ...attrs,
-            },
-            slots.default?.()
-          );
-        };
-      },
-    });
-
-    return { ...primitive, [node]: component };
-  },
-  {} as Record<(typeof NODES)[number], any>
-);
+  return { ...primitive, [node]: component };
+}, {} as Primitives);
 
 function capitalizeFirstLetter(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 export { Primitive };
+export type { PrimitiveProps };
