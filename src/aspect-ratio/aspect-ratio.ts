@@ -1,4 +1,5 @@
 import { defineComponent, h } from "vue";
+import { Primitive } from "@/primitive/primitive";
 
 let AspectRatio = defineComponent({
   name: "AspectRatio",
@@ -22,7 +23,7 @@ let AspectRatio = defineComponent({
           },
           "data-radix-aspect-ratio-wrapper": "",
         },
-        h("div", {
+        h(Primitive.div, {
           style: {
             position: "absolute",
             top: 0,
