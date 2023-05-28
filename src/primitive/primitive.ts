@@ -34,15 +34,7 @@ const Primitive = NODES.reduce((primitive, node) => {
       });
 
       return () => {
-        return props.asChild
-          ? slots.default?.()
-          : h(
-              node,
-              {
-                ...attrs,
-              },
-              slots.default?.()
-            );
+        return props.asChild ? slots.default?.() : h(node, attrs, slots);
       };
     },
     {

@@ -1,40 +1,41 @@
-import { defineComponent, inject, provide, ref, h } from "vue";
-import type { InjectionKey, Ref } from "vue";
-import { Primitive } from "@/primitive/primitive";
+import { Ref, defineComponent, h, provide, ref } from "vue";
+import { useCreateContext } from "../utils/context";
+import { Primitive } from "../primitive/primitive";
 
 type CheckedState = boolean | "indeterminate";
 
-interface CheckboxContextValue {
+type CheckboxContextValue = {
   state: Ref<CheckedState>;
   disabled?: Ref<boolean>;
-}
+};
 
-let CheckboxContext = Symbol(
-  "CheckboxContext"
-) as InjectionKey<CheckboxContextValue>;
+const [CheckboxContext, useCheckboxContext] =
+  useCreateContext<CheckboxContextValue>("Checkbox");
 
-function useCheckboxContext(component: string) {
-  let context = inject(CheckboxContext, null);
-  if (context === null) {
-    let err = new Error(`<${component}> must be used inside <Checkbox>`);
-    // if (Error.captureStackTrace) {
-    //   Error.captureStackTrace(err, useCheckboxContext);
-    // }
-    throw err;
-  }
-  return context;
+interface CheckboxProps {
+  checked?: CheckedState;
+  defaultChecked?: CheckedState;
+  required?: boolean;
 }
 
 function isIndeterminate(checked?: CheckedState): checked is "indeterminate" {
   return checked === "indeterminate";
 }
 
-let Checkbox = defineComponent({
-  name: "Checkbox",
-  props: {},
-  setup(props, { slots, attrs }) {
-    let api: CheckboxContextValue = {
-      state: ref<CheckedState>(false),
+function getState(checked: CheckedState) {
+  return isIndeterminate(checked)
+    ? "indeterminate"
+    : checked
+    ? "checked"
+    : "unchecked";
+}
+
+let Checkbox = defineComponent(
+  (props: CheckboxProps, { slots, attrs, emit }) => {
+    let { checked, defaultChecked, required } = props;
+    let { disabled } = attrs;
+    let api = {
+      state: ref<CheckedState>(defaultChecked || false),
       disabled: ref<boolean>(false),
     };
     provide(CheckboxContext, api);
@@ -42,25 +43,17 @@ let Checkbox = defineComponent({
       return h(Primitive.button, {
         type: "button",
         role: "checkbox",
-        "aria-checked": isIndeterminate(api.state.value)
-          ? "mixed"
-          : api.state.value,
-        "aria-disabled": api.disabled?.value,
-        disabled: api.disabled?.value,
+        "aria-checked": isIndeterminate(checked) ? "mixed" : checked,
+        "aria-required": required,
+        "data-state": getState(api.state.value),
+        "data-disabled": disabled ? "" : undefined,
+        value: api.state.value,
+        onKeydown: (e: KeyboardEvent) => {
+          // According to WAI ARIA, Checkboxes don't activate on enter keypress
+          if (e.key === "Enter") e.preventDefault();
+        },
+        onClick: (e: MouseEvent) => {},
       });
-      // return h("div", attrs, slots.default && slots.default());
     };
-  },
-});
-
-let CheckboxIndicator = defineComponent({
-  name: "CheckboxIndicator",
-  props: {},
-  setup(props, { slots, attrs }) {
-    return () => {
-      // return h("div", attrs, slots.default && slots.default());
-    };
-  },
-});
-
-export { Checkbox, CheckboxIndicator };
+  }
+);
