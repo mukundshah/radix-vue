@@ -20,7 +20,7 @@ describe("given an Avatar with fallback and no image", () => {
         "data-testid": ROOT_TEST_ID,
       },
       slots: {
-        default: () => `<AvatarFallback>${FALLBACK_TEXT}</AvatarFallback>`,
+        default: `<AvatarFallback>${FALLBACK_TEXT}</AvatarFallback>`,
       },
       global: {
         components: {
