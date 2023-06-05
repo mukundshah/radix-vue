@@ -1,44 +1,59 @@
 lockfileVersion: '6.0'
 
-dependencies:
-  vue:
-    specifier: ^3.3.4
-    version: 3.3.4
+importers:
 
-devDependencies:
-  '@testing-library/jest-dom':
-    specifier: ^5.16.5
-    version: 5.16.5
-  '@testing-library/vue':
-    specifier: ^7.0.0
-    version: 7.0.0(@vue/compiler-sfc@3.3.4)(vue@3.3.4)
-  '@types/jest-axe':
-    specifier: ^3.5.5
-    version: 3.5.5
-  '@types/node':
-    specifier: ^16.18.32
-    version: 16.18.32
-  '@vitest/ui':
-    specifier: ^0.31.1
-    version: 0.31.1(vitest@0.31.1)
-  '@vue/test-utils':
-    specifier: ^2.3.2
-    version: 2.3.2(vue@3.3.4)
-  jest-axe:
-    specifier: ^7.0.1
-    version: 7.0.1
-  jsdom:
-    specifier: ^22.1.0
-    version: 22.1.0
-  tslib:
-    specifier: ^2.5.2
-    version: 2.5.2
-  typescript:
-    specifier: ^5.0.4
-    version: 5.0.4
-  vitest:
-    specifier: ^0.31.1
-    version: 0.31.1(@vitest/ui@0.31.1)(jsdom@22.1.0)
+  .:
+    dependencies:
+      vue:
+        specifier: ^3.3.4
+        version: 3.3.4
+    devDependencies:
+      '@testing-library/jest-dom':
+        specifier: ^5.16.5
+        version: 5.16.5
+      '@testing-library/vue':
+        specifier: ^7.0.0
+        version: 7.0.0(@vue/compiler-sfc@3.3.4)(vue@3.3.4)
+      '@types/jest-axe':
+        specifier: ^3.5.5
+        version: 3.5.5
+      '@types/node':
+        specifier: ^16.18.32
+        version: 16.18.32
+      '@vitest/ui':
+        specifier: ^0.31.1
+        version: 0.31.1(vitest@0.31.1)
+      '@vue/test-utils':
+        specifier: ^2.3.2
+        version: 2.3.2(vue@3.3.4)
+      jest-axe:
+        specifier: ^7.0.1
+        version: 7.0.1
+      jsdom:
+        specifier: ^22.1.0
+        version: 22.1.0
+      tslib:
+        specifier: ^2.5.2
+        version: 2.5.2
+      typescript:
+        specifier: ^5.0.4
+        version: 5.0.4
+      vitest:
+        specifier: ^0.31.1
+        version: 0.31.1(@vitest/ui@0.31.1)(jsdom@22.1.0)
+
+  packages/components/avatar:
+    dependencies:
+      '@radix-vue/primitive':
+        specifier: workspace:^
+        version: link:../../core/primitive
+      '@radix-vue/utils':
+        specifier: workspace:^
+        version: link:../../core/utils
+
+  packages/core/primitive: {}
+
+  packages/core/utils: {}
 
 packages:
 

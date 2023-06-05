@@ -1,9 +1,9 @@
 import { defineComponent, h, provide, ref, watch, watchEffect } from "vue";
-import { Primitive } from "../primitive/primitive";
-import { useCreateContext } from "../utils/context";
+import { Primitive } from "@radix-vue/primitive";
+import { useCreateContext } from "@radix-vue/utils";
 
 import type { Ref } from "vue";
-import type { PrimitiveProps } from "../primitive/primitive";
+import type { PrimitiveProps } from "@radix-vue/primitive";
 
 type ImageLoadingStatus = "idle" | "loading" | "loaded" | "error";
 
