@@ -1,4 +1,4 @@
-import { defineComponent, h } from "vue";
+import { Prop, PropType, defineComponent, h } from "vue";
 
 const NAME = "Separator";
 const DEFAULT_ORIENTATION = "horizontal";
@@ -22,7 +22,7 @@ let Separator = defineComponent({
   name: "Separator",
   props: {
     orientation: {
-      type: String,
+      type: String as PropType<Orientation>,
       default: "horizontal",
       validator: (value: string) => {
         if (!isValidOrientation(value)) {
