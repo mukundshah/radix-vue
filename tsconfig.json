@@ -1,16 +1,9 @@
 {
-  "include": ["src", "./vitest.setup.ts"],
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "strict": true,
-    "rootDir": "./",
     "paths": {
-      "@/*": ["./src/*"]
-    },
-    "moduleResolution": "node",
-    "types": ["vitest/globals"]
-  },
-  "exclude": ["node_modules"]
+      "@radix-vue/primitive": ["./packages/core/primitive/src"],
+      "@radix-vue/utils": ["./packages/core/utils/src"]
+    }
+  }
 }
