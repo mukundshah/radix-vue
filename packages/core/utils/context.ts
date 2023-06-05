@@ -1,4 +1,5 @@
-import { InjectionKey, inject } from "vue";
+import { inject } from "vue";
+import type { InjectionKey } from "vue";
 
 export function useCreateContext<T>(component: string) {
   let comp = component;
