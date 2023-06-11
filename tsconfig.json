@@ -1,9 +1,29 @@
 {
-  "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "baseUrl": "./",
+    "declaration": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
     "paths": {
-      "@radix-vue/primitive": ["./packages/core/primitive/src"],
-      "@radix-vue/utils": ["./packages/core/utils/src"]
-    }
-  }
+      "*": ["src/*", "node_modules/*"],
+      "@radix-ui/vue": ["src"]
+    },
+    "resolveJsonModule": true,
+    "rootDir": "./",
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ESNext",
+    "types": ["vitest/globals"]
+  },
+  "exclude": ["node_modules", "dist"],
+  "include": ["src", "./vitest.setup.ts"]
 }
