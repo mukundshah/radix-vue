@@ -1,26 +1,34 @@
-import { defineComponent, h, provide, ref, watch, watchEffect } from "vue";
-import { Primitive } from "@radix-vue/primitive";
-import { useCreateContext } from "@radix-vue/utils";
+import {
+  defineComponent,
+  h,
+  provide,
+  ref,
+  watch,
+  watchEffect,
 
-import type { Ref } from "vue";
-import type { PrimitiveProps } from "@radix-vue/primitive";
+  // Types
+  Ref,
+} from 'vue';
 
-type ImageLoadingStatus = "idle" | "loading" | "loaded" | "error";
+import { Primitive } from '../primitive/primitive';
+import type { PrimitiveProps } from '../primitive/primitive';
+import { useCreateContext } from '../../hooks/use-create-context';
+
+type ImageLoadingStatus = 'idle' | 'loading' | 'loaded' | 'error';
 
 type AvatarContextValue = {
   imageLoadingStatus: Ref<ImageLoadingStatus>;
   onImageLoadingStatusChange(status: ImageLoadingStatus): void;
 };
 
-const [AvatarContext, useAvatarContext] =
-  useCreateContext<AvatarContextValue>("Avatar");
+const [AvatarContext, useAvatarContext] = useCreateContext<AvatarContextValue>('Avatar');
 
 function useImageLoadingStatus(src?: string) {
-  const loadingStatus = ref<ImageLoadingStatus>("idle");
+  const loadingStatus = ref<ImageLoadingStatus>('idle');
 
   watchEffect(() => {
     if (!src) {
-      loadingStatus.value = "error";
+      loadingStatus.value = 'error';
       return;
     }
 
@@ -29,9 +37,9 @@ function useImageLoadingStatus(src?: string) {
       loadingStatus.value = status;
     };
 
-    loadingStatus.value = "loading";
-    img.onload = () => updateStatus("loaded");
-    img.onerror = () => updateStatus("error");
+    loadingStatus.value = 'loading';
+    img.onload = () => updateStatus('loaded');
+    img.onerror = () => updateStatus('error');
     img.src = src;
   });
 
@@ -42,7 +50,7 @@ interface AvatarProps extends PrimitiveProps {}
 
 let Avatar = defineComponent(
   (props: AvatarProps, { attrs, slots }) => {
-    const imageLoadingStatus = ref<ImageLoadingStatus>("idle");
+    const imageLoadingStatus = ref<ImageLoadingStatus>('idle');
     let api: AvatarContextValue = {
       imageLoadingStatus: imageLoadingStatus,
       onImageLoadingStatusChange(value: ImageLoadingStatus) {
@@ -52,7 +60,7 @@ let Avatar = defineComponent(
     provide(AvatarContext, api);
     return () => h(Primitive.div, attrs, slots);
   },
-  { name: "Avatar" }
+  { name: 'Avatar' }
 );
 
 interface AvatarImageProps extends PrimitiveProps {
@@ -62,24 +70,24 @@ interface AvatarImageProps extends PrimitiveProps {
 
 let AvatarImage = defineComponent(
   (props: AvatarImageProps, { attrs, emit }) => {
-    let context = useAvatarContext("AvatarImage");
+    let context = useAvatarContext('AvatarImage');
     const imageLoadingStatus = useImageLoadingStatus(props.src);
     watchEffect(() => {
-      if (imageLoadingStatus.value !== "idle") {
+      if (imageLoadingStatus.value !== 'idle') {
         context.onImageLoadingStatusChange(imageLoadingStatus.value);
       }
     });
-    watch(imageLoadingStatus, (value) => emit("loadingStatusChange", value));
+    watch(imageLoadingStatus, (value) => emit('loadingStatusChange', value));
     return () => {
-      return imageLoadingStatus.value === "loaded"
+      return imageLoadingStatus.value === 'loaded'
         ? h(Primitive.img, { src: props.src, alt: props.alt, ...attrs })
         : null;
     };
   },
   {
-    name: "AvatarImage",
-    props: ["src", "alt"],
-    emits: ["loadingStatusChange"],
+    name: 'AvatarImage',
+    props: ['src', 'alt'],
+    emits: ['loadingStatusChange'],
   }
 );
 
@@ -89,28 +97,23 @@ interface AvatarFallbackProps extends PrimitiveProps {
 
 let AvatarFallback = defineComponent(
   (props: AvatarFallbackProps, { attrs, slots }) => {
-    let context = useAvatarContext("AvatarFallback");
+    let context = useAvatarContext('AvatarFallback');
     const canRender = ref(props.delayMs === undefined);
 
     watchEffect(() => {
       if (props.delayMs !== undefined) {
-        const timerId = setTimeout(
-          () => (canRender.value = true),
-          props.delayMs
-        );
+        const timerId = setTimeout(() => (canRender.value = true), props.delayMs);
         return () => clearTimeout(timerId);
       }
     });
 
     return () => {
-      return canRender.value && context.imageLoadingStatus.value !== "loaded"
-        ? h(Primitive.span, attrs, slots)
-        : null;
+      return canRender.value && context.imageLoadingStatus.value !== 'loaded' ? h(Primitive.span, attrs, slots) : null;
     };
   },
   {
-    name: "AvatarFallback",
-    props: ["delayMs"],
+    name: 'AvatarFallback',
+    props: ['delayMs'],
   }
 );
 
