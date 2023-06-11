@@ -1,8 +1,8 @@
-import { defineComponent, h } from "vue";
-import { Primitive } from "@/primitive/primitive";
+import { defineComponent, h } from 'vue';
+import { Primitive } from '../primitive/primitive';
 
 let Label = defineComponent({
-  name: "Label",
+  name: 'Label',
   setup(props, { slots, attrs }) {
     return () => {
       return h(
